@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #919191;
+}
+
+.container {
+    padding: 50px;
+}
+
+.board {
+    background: url(assets/board.png);
+    height: 600px;
+    width: 600px;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    overflow: hidden;
+}
+
+.pieces {
+    width: 75px;
+    height: 75px;
+}
+
+.pieces img {
+    width: 100%;
+}
