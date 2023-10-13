@@ -31,7 +31,7 @@ class Piece
         }
         else
         {
-            this.element.className = `pieces`;
+            this.element.className = `pieces blank`;
         }
         board.appendChild(this.element);
     }
@@ -62,11 +62,19 @@ window.onload = CreateBoard(def);
 
 board.addEventListener("click", (event) => {
     const SelectedPiece = CheckPieces(event.target);
+
     if(_SelectedPiece == null)
     {
         // Select Piece to move
         _SelectedPiece = SelectedPiece;
-        HighlightLegalMoves();
+        if(_SelectedPiece && _SelectedPiece.classList.contains("blank"))
+        {
+            _SelectedPiece = null;
+        }
+        else
+        {
+            HighlightLegalMoves();
+        }
     }
     else
     {
@@ -116,7 +124,7 @@ function IsValid(piece)
         {
             CheckPromotion(piece, Destignation);
         }
-        else if(_SelectedPiece.classList.contains("notmoved") && (Destignation - PieceLocation === 16 * direction))
+        else if((_SelectedPiece.classList.contains("notmoved") && (Destignation - PieceLocation === 16 * direction)) && !piece.querySelector("img"))
         {
             CheckPromotion(piece, Destignation);
         }
@@ -166,7 +174,7 @@ function HighlightLegalMoves(piece)
             {
                 Highlight(i);
             }
-            else if(_SelectedPiece.classList.contains("notmoved") && (i - PieceLocation === 16 * direction))
+            else if((_SelectedPiece.classList.contains("notmoved") && (i - PieceLocation === 16 * direction)) && !document.querySelector(`[piece-id="${i}"] img`))
             {
                 Highlight(i);
             }
