@@ -1,6 +1,6 @@
 const board = document.querySelector(".board");
 
-import { ResetHighLight, IsWhite, HighLight, CheckPieces } from "./other.js";
+import { ResetHighlight, IsWhite, CheckPieces } from "./other.js";
 
 let _SelectedPiece = null;
 
@@ -66,6 +66,7 @@ board.addEventListener("click", (event) => {
     {
         // Select Piece to move
         _SelectedPiece = SelectedPiece;
+        HighlightLegalMoves();
     }
     else
     {
@@ -83,7 +84,7 @@ function Move(piece)
     _SelectedPiece.className = "pieces blank";
     
     _SelectedPiece = null;
-    ResetHighLight();
+    ResetHighlight();
 }
 function CheckPromotion(piece, Destignation)
 {
@@ -138,12 +139,59 @@ function IsValid(piece)
         else
         {
             _SelectedPiece = null;
+            ResetHighlight();
         }
     }
 
     // Check Valid move for rook
     else if(_SelectedPiece.classList.contains("rook"))
     {
-        
+
     }
+}
+
+function HighlightLegalMoves(piece)
+{
+    ResetHighlight();
+    const PieceLocation = _SelectedPiece.getAttribute("piece-id");
+    
+    if(_SelectedPiece.classList.contains("pawn")) 
+    {
+        const isWhite = IsWhite(_SelectedPiece);
+        const direction = isWhite ? -1 : 1;
+            
+        for(var i = 0; i < def.length; i++)
+        {
+            if(i - PieceLocation === 8 * direction && !document.querySelector(`[piece-id="${i}"] img`))
+            {
+                Highlight(i);
+            }
+            else if(_SelectedPiece.classList.contains("notmoved") && (i - PieceLocation === 16 * direction))
+            {
+                Highlight(i);
+            }
+            else if((isWhite && i - PieceLocation === -7) && document.querySelector(`[piece-id="${i}"] img`))
+            {
+                Highlight(i);
+            }
+            else if((isWhite && i - PieceLocation === -9) && document.querySelector(`[piece-id="${i}"] img`))
+            {
+                Highlight(i);
+            }
+            else if((!isWhite && i - PieceLocation === 7) && document.querySelector(`[piece-id="${i}"] img`))
+            {
+                Highlight(i);
+            }
+            else if((!isWhite && i - PieceLocation === 9) && document.querySelector(`[piece-id="${i}"] img`))
+            {
+                Highlight(i);
+            }
+        }
+    }
+}
+
+function Highlight(square)
+{
+    const targetDiv = document.querySelector(`[piece-id="${square}"]`);
+    targetDiv.classList.add("legalmove");
 }
