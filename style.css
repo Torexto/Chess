@@ -35,3 +35,7 @@ body {
 .pieces img {
     width: 100%;
 }
+
+.legalmove {
+    background: rgba(187, 227, 66, .5);
+}
